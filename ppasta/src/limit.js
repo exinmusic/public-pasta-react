@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class AmountForm extends Component {
+class LimitForm extends Component {
 	constructor(props) {
 	  super(props);
 	  this.handleChange = this.handleChange.bind(this);
 	}
   
 	handleChange(event) {    
-		this.props.onAmountChange(event.target.value);  
+		this.props.onLimitChange(event.target.value);  
 	}
   
 	render() {
@@ -22,4 +22,4 @@ class AmountForm extends Component {
 	}
 }
 
-export default AmountForm;
+export default LimitForm;
