@@ -10,7 +10,7 @@ class ContentBox extends Component {
 		return(
 			<div className="item">
 				<div className="content">
-					<div className="header">{this.props.name}</div>
+					<h3 className="header">{this.props.name}</h3>
 					<div className="description">{this.props.text}</div>
 				</div>
 				<div className="ui divider"></div>
