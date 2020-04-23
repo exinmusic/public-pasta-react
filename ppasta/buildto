@@ -1,0 +1,6 @@
+#! /bin/bash
+
+yarn build
+rm -r ../../public-pasta/pp/.frontend/build/
+mv build/ ../../public-pasta/pp/.frontend
+echo "Moved files to public-pasta/pp/.frontend!"

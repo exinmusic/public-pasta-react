@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
   getData = () => {
-	axios.get('http://127.0.0.1:8000/pastas/?limit='+this.state.limit+'&offset='+this.state.offset)
+	axios.get('http://127.0.0.1:8000/api/pastas/?limit='+this.state.limit+'&offset='+this.state.offset)
 		.then(res => {
 			const pasta = res.data.results;
 			this.setState({ pasta });
