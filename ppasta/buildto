@@ -2,5 +2,5 @@
 
 yarn build
 rm -r ../../public-pasta/pp/.frontend/build/
-mv build/ ../../public-pasta/pp/.frontend
+mv build/ ../../public-pasta/pp/.frontend/build/
 echo "Moved files to public-pasta/pp/.frontend!"

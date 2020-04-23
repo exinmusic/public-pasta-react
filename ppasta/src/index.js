@@ -5,6 +5,7 @@ import ContentBox from './content';
 import Logo from './logo';
 import LimitForm from './limit';
 import OffsetForm from './offset';
+import UserAuth from './auth';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class App extends Component {
     this.state = { 
 	  pasta: [{text:null}],
 	  limit: 5,
-	  offset: 0
+	  offset: 0,
+	  user: {},
     };
   }
   getData = () => {
@@ -22,6 +24,13 @@ class App extends Component {
 		.then(res => {
 			const pasta = res.data.results;
 			this.setState({ pasta });
+		})
+  }
+  getUser = () => {
+	axios.get('http://127.0.0.1:8000/api/user')
+		.then(res => {
+			const user = res.data.results;
+			this.setState({ user });
 		})
   }
   componentDidMount() {
@@ -39,16 +48,23 @@ class App extends Component {
 	this.setState({ offset });
 	setTimeout(this.getData.bind(this), 100)
   } 
+  handleUserLogin(response) {
+	if (response == 200) {
+
+	}
+  }
 
   render() {
 	const listItems = this.state.pasta.map((pasta) =>
   		<ContentBox text={pasta.text} name={pasta.name}/>
 	);
+
 	return (
 	  <div className="ui container">
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
 			<Logo />
+			<UserAuth />
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">
