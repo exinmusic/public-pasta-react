@@ -66,7 +66,7 @@ class App extends Component {
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
 			<Logo user={this.state.user}/>
-			{this.state.user.authenticated ? <div className="ui segment">Welcome back!</div> : <UserAuth onUserLogin={this.handleUserLogin}/>}
+	{this.state.user.authenticated ? <div className="ui segment">Welcome back {this.state.user.username}!</div> : <UserAuth onUserLogin={this.handleUserLogin}/>}
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">
