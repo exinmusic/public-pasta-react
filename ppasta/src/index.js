@@ -12,6 +12,7 @@ class App extends Component {
 	super(props);
 	this.handleLimitChange = this.handleLimitChange.bind(this);
 	this.handleOffsetChange = this.handleOffsetChange.bind(this);
+	this.handleUserLogin = this.handleUserLogin.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
 	  limit: 5,
@@ -27,14 +28,15 @@ class App extends Component {
 		})
   }
   getUser = () => {
-	axios.get('http://127.0.0.1:8000/api/user')
+	axios.get('http://127.0.0.1:8000/api/user/')
 		.then(res => {
-			const user = res.data.results;
+			const user = res.data;
 			this.setState({ user });
 		})
   }
   componentDidMount() {
 	this.getData(); // Make API request
+	this.getUser(); // Make API request
 	this.intervalID = setInterval(this.getData.bind(this), 10000); // Request every 15 seconds
   }
   componentWillUnmount() {
@@ -49,22 +51,22 @@ class App extends Component {
 	setTimeout(this.getData.bind(this), 100)
   } 
   handleUserLogin(response) {
-	if (response == 200) {
-
+	if (response.status == 200) {
+		this.getUser();
 	}
   }
 
   render() {
 	const listItems = this.state.pasta.map((pasta) =>
-  		<ContentBox text={pasta.text} name={pasta.name}/>
+  		<ContentBox pasta={pasta} user={this.state.user}/>
 	);
 
 	return (
 	  <div className="ui container">
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
-			<Logo />
-			<UserAuth />
+			<Logo user={this.state.user}/>
+			{this.state.user.authenticated ? <div className="ui segment">Welcome back!</div> : <UserAuth onUserLogin={this.handleUserLogin}/>}
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">

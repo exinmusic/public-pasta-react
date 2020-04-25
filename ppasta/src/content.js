@@ -10,8 +10,10 @@ class ContentBox extends Component {
 		return(
 			<div className="item">
 				<div className="content">
-					<h3 className="header">{this.props.name}</h3>
-					<div className="description">{this.props.text}</div>
+					<h2 className="header">{this.props.pasta.name}</h2>
+					<div className="description">{this.props.pasta.category}</div>
+					{this.props.user.authenticated && <h4 className="header"><i class="tag icon"></i>{this.props.pasta.id}</h4>}
+					<div className="description">{this.props.pasta.text}</div>
 				</div>
 				<div className="ui divider"></div>
 		  	</div>

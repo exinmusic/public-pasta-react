@@ -19,10 +19,11 @@ class UserAuth extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		axios.post(`http://127.0.0.1:8000/basic-auth/`, { username: this.state.username, password: this.state.password })
-		.then(res => {
-		  console.log(res);
-		  console.log(res.status);
+		axios.post(`http://127.0.0.1:8000/login/`, { username: this.state.username, password: this.state.password })
+		.then(response => {
+		  console.log(response);
+		  console.log(response.status);
+		  this.props.onUserLogin(response)
 		})
 
 	}
