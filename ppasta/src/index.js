@@ -6,6 +6,7 @@ import Logo from './logo';
 import LimitForm from './limit';
 import OffsetForm from './offset';
 import UserAuth from './auth';
+import PastaSubmit from './submit';
 
 class App extends Component {
   constructor(props) {
@@ -67,6 +68,7 @@ class App extends Component {
 		<div className="ui yellow inverted segment">
 			<Logo user={this.state.user}/>
 	{this.state.user.authenticated ? <div className="ui segment">Welcome back {this.state.user.username}!</div> : <UserAuth onUserLogin={this.handleUserLogin}/>}
+			<PastaSubmit />
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">
