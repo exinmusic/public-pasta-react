@@ -31,7 +31,7 @@ class PastaSubmit extends Component {
 	render () {
 		return(
 		<form className="ui form segment" onSubmit={this.handleSubmit}>
-			<div className="two fields">
+
 				<div className="field">
 					<label>Name: </label>
 					<input type="text" onChange={this.handleNameChange} />   
@@ -40,7 +40,7 @@ class PastaSubmit extends Component {
 					<label> Text: </label>
 					<textarea onChange={this.handleTextChange} rows="4" cols="50"></textarea>       				      				
 				</div>	
-			</div>
+
 			<button className="ui yellow button" type="submit">Submit</button>
 		</form>  
 		);

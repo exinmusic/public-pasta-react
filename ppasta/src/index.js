@@ -92,4 +92,22 @@ class App extends Component {
   }
 }
 
+class AuthView extends Component{
+	constructor(props){
+		super(props);
+	}
+	render() {
+		return();
+	}
+}
+
+class PastaView extends Component{
+	contructor(props){
+		super(props);
+	}
+	render() {
+		return();
+	}
+}
+
 ReactDOM.render(<App />, document.querySelector('#root'))
