@@ -19,7 +19,7 @@ class PastaSubmit extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		axios.post(`http://127.0.0.1:8000/api/submit/`, { name: this.state.name, text: this.state.text })
+		axios.post(this.props.address+`/api/submit/`, { name: this.state.name, text: this.state.text })
 		.then(response => {
 		  console.log(response);
 		  console.log(response.status);

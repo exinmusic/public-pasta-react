@@ -19,17 +19,22 @@ class App extends Component {
 	  limit: 5,
 	  offset: 0,
 	  user: {},
-    };
+	};
+	if (process.env.REACT_APP_SERVER_ADDRESS) {
+		this.state.address = process.env.REACT_APP_SERVER_ADDRESS;
+	} else {
+		this.state.address = 'http://127.0.0.1:8000'
+	}
   }
   getData = () => {
-	axios.get('http://127.0.0.1:8000/api/pastas/?limit='+this.state.limit+'&offset='+this.state.offset)
+	axios.get(this.state.address+'/api/pastas/?limit='+this.state.limit+'&offset='+this.state.offset)
 		.then(res => {
 			const pasta = res.data.results;
 			this.setState({ pasta });
 		})
   }
   getUser = () => {
-	axios.get('http://127.0.0.1:8000/api/user/')
+	axios.get(this.state.address+'/api/user/')
 		.then(res => {
 			const user = res.data;
 			this.setState({ user });
@@ -67,8 +72,8 @@ class App extends Component {
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
 			<Logo user={this.state.user}/>
-	{this.state.user.authenticated ? <div className="ui segment">Welcome back {this.state.user.username}!</div> : <UserAuth onUserLogin={this.handleUserLogin}/>}
-			<PastaSubmit />
+	{this.state.user.authenticated ? <div className="ui segment">Welcome back {this.state.user.username}!</div> : <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
+			<PastaSubmit address={this.state.address}/>
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">
@@ -90,24 +95,6 @@ class App extends Component {
 
 	);
   }
-}
-
-class AuthView extends Component{
-	constructor(props){
-		super(props);
-	}
-	render() {
-		return();
-	}
-}
-
-class PastaView extends Component{
-	contructor(props){
-		super(props);
-	}
-	render() {
-		return();
-	}
 }
 
 ReactDOM.render(<App />, document.querySelector('#root'))
