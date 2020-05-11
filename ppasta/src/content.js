@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 
+function TagLabel(props) {
+	return <a class="ui tag label">{props.category}</a>
+}
+
 class ContentBox extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
-		this.state = {};
-	}
+	};
 
 	render () {
+		try{
+			this.listItems = this.props.pasta.categories.map((category) =>
+				<TagLabel category={category}/>
+			);	
+		}
+		catch {
+			this.listItems = <TagLabel category={this.props.pasta.categories}/>
+		}
+
+
 		return(
 			<div className="item">
 				<div className="content">
 					<h2 className="header">{this.props.pasta.name}</h2>
-					<div className="description">{this.props.pasta.category}</div>
+					{this.listItems}
 					{this.props.user.authenticated && <h4 className="header"><i class="tag icon"></i>{this.props.pasta.id}</h4>}
 					<div className="description">{this.props.pasta.text}</div>
 				</div>
