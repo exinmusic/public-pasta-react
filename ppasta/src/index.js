@@ -14,11 +14,15 @@ class App extends Component {
 	this.handleLimitChange = this.handleLimitChange.bind(this);
 	this.handleOffsetChange = this.handleOffsetChange.bind(this);
 	this.handleUserLogin = this.handleUserLogin.bind(this);
+	this.handleShowAuth = this.handleShowAuth.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
 	  limit: 5,
 	  offset: 0,
 	  user: {},
+	  ui: {
+		auth: false
+	  }
 	};
 	if (process.env.REACT_APP_SERVER_ADDRESS) {
 		this.state.address = process.env.REACT_APP_SERVER_ADDRESS;
@@ -61,6 +65,11 @@ class App extends Component {
 		this.getUser();
 	}
   }
+  handleShowAuth() {
+	this.setState({ 
+		ui:{ auth: true } 
+	})
+  }
 
   render() {
 	const listItems = this.state.pasta.map((pasta) =>
@@ -72,7 +81,7 @@ class App extends Component {
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
 			<Logo user={this.state.user}/>
-	{this.state.user.authenticated ? <div className="ui segment">Welcome back {this.state.user.username}!</div> : <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
+			{this.state.ui.auth && <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
 			<PastaSubmit address={this.state.address}/>
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
