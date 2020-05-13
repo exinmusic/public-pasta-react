@@ -18,13 +18,21 @@ class ContentBox extends Component {
 		catch {
 			this.listItems = <TagLabel category={this.props.pasta.categories}/>
 		}
-
+		if (this.props.pasta.sentiment === 'positive') {
+			this.semanticIcon = <i class="smile icon"></i>
+		} else if (this.props.pasta.sentiment === 'negative') {
+			this.semanticIcon = <i class="frown icon"></i>
+		} else {
+			this.semanticIcon = <i></i>
+		}
 
 		return(
 			<div className="item">
 				<div className="content">
 					<h2 className="header">{this.props.pasta.name}</h2>
+					{this.semanticIcon}
 					{this.listItems}
+					
 					{this.props.user.authenticated && <h4 className="header"><i class="tag icon"></i>{this.props.pasta.id}</h4>}
 					<div className="description">{this.props.pasta.text}</div>
 				</div>
