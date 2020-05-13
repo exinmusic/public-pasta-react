@@ -15,6 +15,7 @@ class App extends Component {
 	this.handleOffsetChange = this.handleOffsetChange.bind(this);
 	this.handleUserLogin = this.handleUserLogin.bind(this);
 	this.handleShowAuth = this.handleShowAuth.bind(this);
+	this.handlePastaSubmit = this.handlePastaSubmit.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
 	  limit: 5,
@@ -63,12 +64,27 @@ class App extends Component {
   handleUserLogin(response) {
 	if (response.status == 200) {
 		this.getUser();
+		this.setState({
+			ui:{ auth: false } 
+		})
 	}
   }
+  handlePastaSubmit(response) {
+	if (response.status == 200) {
+		this.getData();
+
+	}  
+  }
   handleShowAuth() {
-	this.setState({ 
-		ui:{ auth: true } 
-	})
+	if (this.state.ui.auth) {
+		this.setState({
+			ui:{ auth: false } 
+		})			
+	} else {
+		this.setState({
+			ui:{ auth: true } 
+		})		
+	}
   }
 
   render() {
@@ -80,9 +96,9 @@ class App extends Component {
 	  <div className="ui container">
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
-			<Logo user={this.state.user}/>
+			<Logo user={this.state.user} onUIChange={this.handleShowAuth}/>
 			{this.state.ui.auth && <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
-			<PastaSubmit address={this.state.address}/>
+			<PastaSubmit address={this.state.address} onSubmit={this.handlePastaSubmit}/>
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">

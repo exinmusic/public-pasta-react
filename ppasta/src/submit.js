@@ -23,7 +23,7 @@ class PastaSubmit extends Component {
 		.then(response => {
 		  console.log(response);
 		  console.log(response.status);
-		  this.props.onUserLogin(response)
+		  this.props.onSubmit(response)
 		})
 
 	}
