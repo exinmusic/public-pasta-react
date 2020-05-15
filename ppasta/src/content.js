@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
 function TagLabel(props) {
-	return <a class="ui tag label">{props.category}</a>
+	return <div class="ui tag label">{props.category}</div>
 }
 
 class ContentBox extends Component {
-	constructor(props) {
-		super(props);
-	};
+
 
 	render () {
 		try{

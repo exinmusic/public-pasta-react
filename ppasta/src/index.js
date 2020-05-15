@@ -62,7 +62,7 @@ class App extends Component {
 	setTimeout(this.getData.bind(this), 100)
   } 
   handleUserLogin(response) {
-	if (response.status == 200) {
+	if (response.status === 200) {
 		this.getUser();
 		this.setState({
 			ui:{ auth: false } 
@@ -70,7 +70,7 @@ class App extends Component {
 	}
   }
   handlePastaSubmit(response) {
-	if (response.status == 200) {
+	if (response.status === 200) {
 		this.getData();
 
 	}  

@@ -23,9 +23,7 @@ class Logo extends Component {
 }
 
 class AuthIcon extends Component {
-	constructor (props) {
-		super(props);
-	}
+
 	render () {
 		if (this.props.user.username) {
 			return <div className="header item"><i class="green large ticket icon"></i>{this.props.user.username}</div>;
