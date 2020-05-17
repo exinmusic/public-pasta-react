@@ -33,11 +33,11 @@ class PastaSubmit extends Component {
 		<form className="ui form segment" onSubmit={this.handleSubmit}>
 
 				<div className="field">
-					<label>Name: </label>
+					<label>Title: </label>
 					<input type="text" onChange={this.handleNameChange} />   
 				</div>
 				<div className="field">
-					<label> Text: </label>
+					<label> Pasta: </label>
 					<textarea onChange={this.handleTextChange} rows="4" cols="50"></textarea>       				      				
 				</div>	
 

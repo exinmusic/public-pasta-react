@@ -11,6 +11,8 @@ import PastaSubmit from './submit';
 class App extends Component {
   constructor(props) {
 	super(props);
+
+	// BINDS
 	this.handleLimitChange = this.handleLimitChange.bind(this);
 	this.handleOffsetChange = this.handleOffsetChange.bind(this);
 	this.handleUserLogin = this.handleUserLogin.bind(this);
@@ -20,11 +22,20 @@ class App extends Component {
 	  pasta: [{text:null}],
 	  limit: 5,
 	  offset: 0,
+	  filters: {
+		  long: '',
+		  sentiment: '',
+		  category: '',
+		  search: ''
+	  },
 	  user: {},
 	  ui: {
-		auth: false
+		auth: false,
+		submit: false
 	  }
 	};
+
+	// Set ADDRESS in state based on environment
 	if (process.env.REACT_APP_SERVER_ADDRESS) {
 		this.state.address = process.env.REACT_APP_SERVER_ADDRESS;
 	} else {
@@ -32,7 +43,15 @@ class App extends Component {
 	}
   }
   getData = () => {
-	axios.get(this.state.address+'/api/pastas/?limit='+this.state.limit+'&offset='+this.state.offset)
+	axios.get(
+		this.state.address+
+		'/api/pastas/?limit='+this.state.limit+
+		'&offset='+this.state.offset+
+		'&long='+this.state.filters.long+
+		'&sentiment='+this.state.filters.sentiment+
+		'&categories__contains='+this.state.filters.category+
+		'&search='+this.state.filters.search
+	)
 		.then(res => {
 			const pasta = res.data.results;
 			this.setState({ pasta });
@@ -98,7 +117,7 @@ class App extends Component {
 		<div className="ui yellow inverted segment">
 			<Logo user={this.state.user} onUIChange={this.handleShowAuth}/>
 			{this.state.ui.auth && <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
-			<PastaSubmit address={this.state.address} onSubmit={this.handlePastaSubmit}/>
+			{this.state.ui.submit && <PastaSubmit address={this.state.address} onSubmit={this.handlePastaSubmit}/>}
 			<div class="ui equal width center aligned padded grid">
 				<div class="row">
 					<div class="column">

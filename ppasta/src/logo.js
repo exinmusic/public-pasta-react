@@ -13,7 +13,28 @@ class Logo extends Component {
 		return(
 			<div className="ui menu">
 				<div className="ui red header item"><img src="https://image.flaticon.com/icons/svg/590/590810.svg" alt='Pasta!'/>&nbsp;&nbsp;&nbsp;Public Pasta</div>
-				<div className="ui tiny header item">What?</div>
+				
+				<div class="ui simple dropdown item">
+					Styles
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item">sermon</div>
+						<div class="item">intelligent</div>
+						<div class="item">dumb</div>
+						<div class="item">funny</div>
+						<div class="item">sad</div>
+						<div class="item">political</div>
+						<div class="item">complaint</div>
+						<div class="item">emoji</div>
+						<div class="item">daddy</div>
+						<div class="item">sexy</div>
+						<div class="item">pro</div>
+						<div class="item">creepy</div>
+						<div class="item">food</div>
+						<div class="item">nsfw</div>
+					</div>
+				</div>
+
 				<div className="right menu">
 					<AuthIcon user={this.props.user} onUIChange={this.handleChange}/>
 				</div>
