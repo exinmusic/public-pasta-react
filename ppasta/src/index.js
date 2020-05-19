@@ -2,7 +2,7 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import ContentBox from './content';
-import Logo from './logo';
+import MainMenu from './menu';
 import LimitForm from './limit';
 import OffsetForm from './offset';
 import UserAuth from './auth';
@@ -18,6 +18,7 @@ class App extends Component {
 	this.handleUserLogin = this.handleUserLogin.bind(this);
 	this.handleShowAuth = this.handleShowAuth.bind(this);
 	this.handlePastaSubmit = this.handlePastaSubmit.bind(this);
+	this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
 	  limit: 5,
@@ -98,12 +99,18 @@ class App extends Component {
 	if (this.state.ui.auth) {
 		this.setState({
 			ui:{ auth: false } 
-		})			
+		});			
 	} else {
 		this.setState({
 			ui:{ auth: true } 
-		})		
+		});		
 	}
+  }
+  handleCategoryChange(category) {
+	const filters = this.state.filters
+	filters.category = category
+	this.setState({filters});
+	this.getData();
   }
 
   render() {
@@ -115,7 +122,7 @@ class App extends Component {
 	  <div className="ui container">
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
-			<Logo user={this.state.user} onUIChange={this.handleShowAuth}/>
+			<MainMenu user={this.state.user} onUIChange={this.handleShowAuth} onCategoryChange={this.handleCategoryChange}/>
 			{this.state.ui.auth && <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
 			{this.state.ui.submit && <PastaSubmit address={this.state.address} onSubmit={this.handlePastaSubmit}/>}
 			<div class="ui equal width center aligned padded grid">
@@ -126,6 +133,9 @@ class App extends Component {
 					<div class="column">
 					<LimitForm limit={this.state.limit} onLimitChange={this.handleLimitChange}/>
 					</div>
+				</div>
+				<div class="row">
+					<h2>{this.state.filters.category}</h2>
 				</div>
 			</div>
 			<div className="ui segment">
