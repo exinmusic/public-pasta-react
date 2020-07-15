@@ -40,7 +40,7 @@ class App extends Component {
 	if (process.env.REACT_APP_SERVER_ADDRESS) {
 		this.state.address = process.env.REACT_APP_SERVER_ADDRESS;
 	} else {
-		this.state.address = 'http://www.publicpasta.com/'
+		this.state.address = 'http://127.0.0.1:8000'
 	}
   }
   getData = () => {
