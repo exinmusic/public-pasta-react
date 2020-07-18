@@ -33,7 +33,7 @@ class MainMenu extends Component {
 						<button value="daddy" 		 class="item"	onClick={this.handleCategory}>daddy</button>
 						<button value="sexy" 		 class="item"	onClick={this.handleCategory}>sexy</button>
 						<button value="pro" 		 class="item"	onClick={this.handleCategory}>pro</button>
-						<button value="creepy" 	 class="item"	onClick={this.handleCategory}>creepy</button>
+						<button value="creepy" 	 	 class="item"	onClick={this.handleCategory}>creepy</button>
 						<button value="food" 		 class="item"	onClick={this.handleCategory}>food</button>
 						<button value="nsfw" 		 class="item"	onClick={this.handleCategory}>nsfw</button>
 					</div>
@@ -51,7 +51,7 @@ class AuthIcon extends Component {
 
 	render () {
 		if (this.props.user.username) {
-			return <div className="header item"><i class="green large ticket icon"></i>{this.props.user.username}</div>;
+			return <div className="header item"><i class="green large ticket icon"></i>{this.props.user.token}</div>;
 		} else {
 			return <div onClick={this.props.onUIChange} className="header item"><i class="red large ticket icon"></i>Guest</div>;
 		}
