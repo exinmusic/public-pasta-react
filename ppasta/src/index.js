@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import ContentBox from './content';
 import MainMenu from './menu';
-import LimitForm from './limit';
-import OffsetForm from './offset';
+import PrevPasta from './prev_pasta'
+import NextPasta from './next_pasta';
 import UserAuth from './auth';
 import PastaSubmit from './submit';
 
@@ -19,9 +19,13 @@ class App extends Component {
 	this.handleShowAuth = this.handleShowAuth.bind(this);
 	this.handlePastaSubmit = this.handlePastaSubmit.bind(this);
 	this.handleCategoryChange = this.handleCategoryChange.bind(this);
+	this.handleShowSubmit = this.handleShowSubmit.bind(this);
+	this.handleSearchChange = this.handleSearchChange.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
-	  limit: 5,
+	  next:null,
+	  prev:null,
+	  limit: 10,
 	  offset: 0,
 	  filters: {
 		  long: '',
@@ -55,7 +59,9 @@ class App extends Component {
 	)
 		.then(res => {
 			const pasta = res.data.results;
-			this.setState({ pasta });
+			const next = res.data.next;
+			const prev = res.data.previous;
+			this.setState({ pasta, next, prev });
 		})
   }
   getUser = () => {
@@ -68,7 +74,7 @@ class App extends Component {
   componentDidMount() {
 	this.getData(); // Make API request
 	this.getUser(); // Make API request
-	this.intervalID = setInterval(this.getData.bind(this), 10000); // Request every 15 seconds
+	this.intervalID = setInterval(this.getData.bind(this), 60000); // Request every 60 seconds
   }
   componentWillUnmount() {
 	clearInterval(this.intervalID);
@@ -92,25 +98,45 @@ class App extends Component {
   handlePastaSubmit(response) {
 	if (response.status === 200) {
 		this.getData();
+		const ui = this.state.ui
+		ui.submit = false;
+		this.setState({ ui })
 
 	}  
   }
   handleShowAuth() {
 	if (this.state.ui.auth) {
 		this.setState({
-			ui:{ auth: false } 
+			ui:{ auth: false, submit: this.state.ui.submit } 
 		});			
 	} else {
 		this.setState({
-			ui:{ auth: true } 
+			ui:{ auth: true, submit: this.state.ui.submit } 
 		});		
+	}
+  }
+  handleShowSubmit() {
+	if (this.state.ui.submit) {
+		this.setState({
+			ui: { auth: this.state.ui.auth, submit: false }
+		});
+	} else {
+		this.setState({
+			ui: { auth: this.state.ui.auth, submit: true }
+		});
 	}
   }
   handleCategoryChange(category) {
 	const filters = this.state.filters
 	filters.category = category
-	this.setState({filters});
-	this.getData();
+	this.setState({filters, offset:0});
+	setTimeout(this.getData.bind(this), 100)
+  }
+  handleSearchChange(term) {
+	const filters = this.state.filters
+	filters.search = term.target.value
+	this.setState({filters, offset:0});
+	setTimeout(this.getData.bind(this), 100)
   }
 
   render() {
@@ -122,27 +148,24 @@ class App extends Component {
 	  <div className="ui container">
 		<div className="ui hidden spacer"></div>
 		<div className="ui yellow inverted segment">
-			<MainMenu user={this.state.user} onUIChange={this.handleShowAuth} onCategoryChange={this.handleCategoryChange}/>
+			<MainMenu user={this.state.user} onShowSubmit={this.handleShowSubmit} onUIChange={this.handleShowAuth} onCategoryChange={this.handleCategoryChange}/>
 			{this.state.ui.auth && <UserAuth onUserLogin={this.handleUserLogin} address={this.state.address}/>}
 			{this.state.ui.submit && <PastaSubmit address={this.state.address} onSubmit={this.handlePastaSubmit}/>}
-			<div class="ui equal width center aligned padded grid">
-				<div class="row">
-					<div class="column">
-					<OffsetForm offset={this.state.offset} onOffsetChange={this.handleOffsetChange}/>
-					</div>
-					<div class="column">
-					<LimitForm limit={this.state.limit} onLimitChange={this.handleLimitChange}/>
-					</div>
-				</div>
-				<div class="row">
-					<h2>{this.state.filters.category}</h2>
-				</div>
+
+			<div class="ui fluid massive left icon input">
+				<i class="search icon"></i>
+				<input type="text" placeholder="Enter your pasta terms here" autocomplete="false" value={this.state.filters.search} onChange={this.handleSearchChange}/>
 			</div>
+
 			<div className="ui segment">
+				{this.state.filters.category && <div><span className="ui big red header">Searching </span><span className="ui big red circular label">{this.state.filters.category.toUpperCase()}</span><span className="ui big red header"> pasta.</span></div>}
 				<ul className='ui container list'>
 					{listItems}
 				</ul>		
-			</div>	 
+			</div>
+			{this.state.prev !== null && <PrevPasta onOffsetChange={this.handleOffsetChange} offset={this.state.offset} limit={this.state.limit}/>}
+			{this.state.next !== null && <NextPasta onOffsetChange={this.handleOffsetChange} offset={this.state.offset} limit={this.state.limit}/>}
+			
 		</div>
 		<div className="ui hidden spacer"></div>		  
 	  </div>
