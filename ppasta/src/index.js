@@ -21,8 +21,10 @@ class App extends Component {
 	this.handleCategoryChange = this.handleCategoryChange.bind(this);
 	this.handleShowSubmit = this.handleShowSubmit.bind(this);
 	this.handleSearchChange = this.handleSearchChange.bind(this);
+	this.handleSentimentChange = this.handleSentimentChange.bind(this);
     this.state = { 
 	  pasta: [{text:null}],
+	  count:0,
 	  next:null,
 	  prev:null,
 	  limit: 10,
@@ -33,7 +35,7 @@ class App extends Component {
 		  category: '',
 		  search: ''
 	  },
-	  user: {},
+	  user: {authenticated:false},
 	  ui: {
 		auth: false,
 		submit: false
@@ -61,7 +63,8 @@ class App extends Component {
 			const pasta = res.data.results;
 			const next = res.data.next;
 			const prev = res.data.previous;
-			this.setState({ pasta, next, prev });
+			const count = res.data.count;
+			this.setState({ pasta, next, prev, count });
 		})
   }
   getUser = () => {
@@ -138,10 +141,12 @@ class App extends Component {
 	this.setState({filters, offset:0});
 	setTimeout(this.getData.bind(this), 100)
   }
-
+  handleSentimentChange() {
+	setTimeout(this.getData.bind(this), 100)
+  }
   render() {
 	const listItems = this.state.pasta.map((pasta) =>
-  		<ContentBox pasta={pasta} user={this.state.user}/>
+  		<ContentBox pasta={pasta} user={this.state.user} address={this.state.address} onChange={this.handleSentimentChange}/>
 	);
 
 	return (
@@ -165,7 +170,7 @@ class App extends Component {
 			</div>
 			{this.state.prev !== null && <PrevPasta onOffsetChange={this.handleOffsetChange} offset={this.state.offset} limit={this.state.limit}/>}
 			{this.state.next !== null && <NextPasta onOffsetChange={this.handleOffsetChange} offset={this.state.offset} limit={this.state.limit}/>}
-			
+			<div>{this.state.count} total pastas.</div>
 		</div>
 		<div className="ui hidden spacer"></div>		  
 	  </div>

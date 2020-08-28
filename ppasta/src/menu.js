@@ -65,7 +65,7 @@ class AuthIcon extends Component {
 		if (this.props.user.username) {
 			return <div className="header item"><i class="green large ticket icon"></i>{this.props.user.token}</div>;
 		} else {
-			return <div onClick={this.props.onUIChange} className="header item"><i class="red large ticket icon"></i>Guest</div>;
+			return <a onClick={this.props.onUIChange} className="header item"><i class="red large ticket icon"></i>Guest</a>;
 		}
 	}
 }
